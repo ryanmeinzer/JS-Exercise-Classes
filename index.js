@@ -41,6 +41,28 @@ class Airplane {
 */
 
 class Person {
+  constructor(name, age) {
+    this.name = name,
+    this.age = age,
+    this.stomach = [];
+  }
+
+//methods go here
+
+eat(someFood) {
+  if (this.stomach.length >= 10) {
+  } else {
+    this.stomach.push(someFood);
+  }
+};
+
+poop() {
+  this.stomach = [];
+};
+
+toString() {
+  return `${this.name}, ${this.age}`;
+};
 
 }
 
@@ -59,8 +81,31 @@ class Person {
 */
 
 class Car {
-
+  constructor (model, milesPerGallon) {
+    this.tank = 0,
+    this.odometer = 0,
+    this.model = model,
+    this.milesPerGallon = milesPerGallon;
 }
+
+fill(gallons) {
+  this.tank += gallons;
+  // could also use:
+  // return (this.tank = this.tank + gallons;
+};
+
+drive(distance) {
+  let driveableMiles = this.tank * this.milesPerGallon;
+  if (driveableMiles >= distance) {
+    this.odometer = this.odometer + distance;
+    this.tank = distance / this.milesPerGallon;
+  } else {
+    this.tank = 0;
+    this.odometer += driveableMiles;
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }
+}
+};
 
 /*
   TASK 3
@@ -75,6 +120,14 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
+  constructor(attributes) {
+    this.name = attributes.name,
+    this.age = attributes.age,
+    this.location = attributes.location;
+  }
+speak(){
+  return `Hello my name is ${this.name}, I am from ${this.location}.`
+}
 
 }
 
@@ -92,8 +145,20 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian {
+  constructor(attributes) {
+    super(attributes) //this replaces lambdasian.call
+    this.specialty = attributes.specialty,
+    this.favLanguage = attributes.favLanguage,
+    this.catchPhrase = attributes.catchPhrase
+  }
+  //methods go here
+  demo(subject) {
+    return `Today we are learning bout ${subject}.`
+  }
+  grade(student, subject) {
+    return `${student.name} receives a perfect score on ${subject}.`
+  }
 }
 
 /*
@@ -111,8 +176,24 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian {
+  constructor(attributes) {
+    super(attributes) //this replaces lambdasian.call
+    this.previousBackground = attributes.previousBackground,
+    this.className = attributes.className,
+    this.favSubjects = attributes.favSubjects
+    // optional? --> this.subject = attributes.subject
+    } 
+  //methods go here
+    listSubjects () {
+      return `${this.favSubjects}`;
+    }
+    PRAssignment (subject) {
+      return  `${this.name} has submitted a PR for ${subject}.`; //I don't quite understand how subject is being binded to this, especially as it wasn't defined/called correctly under the contructor and how it's also used as an argument in the next sprintChallenge method...
+    }
+    sprintChallenge (subject) {
+      return `${this.name} has begun sprint challenge on ${subject}.`;
+    }
 }
 
 /*
@@ -128,8 +209,19 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor {
+  constructor (attributes) {
+    super(attributes) //this replaces instructor.call
+    this.gradClassName = attributes.gradClassName,
+    this.favInstructor = attributes.favInstructor
+  }
+  //methods go here
+  standUp(channel) {
+    return `${this.name} announces to ${channel}, @channel standy times!`;
+  }
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}.`;
+  }
 }
 
 /*
@@ -140,6 +232,28 @@ class ProjectManager {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+// I don't know if I did this correctly, wish there were tests for it! ; )
+//
+//class Stretch extends Student {
+//   constructor (attributes) {
+//     super(attributes) //this replaces student.call
+//     this.grade = 80
+//   }
+// randomizeGrade (1, 100) {
+//   min = Math.ceil(1);
+//   max = Math.floor(100);
+//   this.grade = Math.floor(Math.random() * (100 - 1 + 1)) + 1; 
+// }
+
+// graduate () {
+//   if (this.grade >= 70) {
+//     return `Congrats grad!`;
+//   } else {
+//     randomizeGrade ();
+//   }
+// }
+// }
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
